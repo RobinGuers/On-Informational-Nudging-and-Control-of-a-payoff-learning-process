@@ -1,0 +1,142 @@
+On-Informational-Nudging-and-Control-of-a-payoff-learning-process
+=================================================================
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{babel}
+\begin{document}
+
+\title{README for ``On informational nudging and control of payoff-based learning'' MATLAB source code}
+
+
+\author{Robin Guers, Cedric Langbort and Dan Work}
+\maketitle
+\begin{abstract}
+This document describes the implementation of the simulation used in ``On informational nudging and control of payoff-based learning'' by R.Guers C. Langbort and D. Work, in the process of being submitted for publication in Automatica.
+A preprint of the article is available for download on the second
+author's website. The source code is hosted at \url{https://github.com/RobinGuers/On-Informational-Nudging-and-Control-of-a-payoff-learning-process}.
+\end{abstract}
+
+\section{License}
+
+This software is licensed under the \emph{University of Illinois/NCSA
+Open Source License}:
+
+\begin{center}
+Copyright (c) 2013 The Board of Trustees of the University of Illinois.
+All rights reserved.
+\par\end{center}
+
+\begin{center}
+Developed by: Department of Civil and Environmental Engineering University
+of Illinois at Urbana-Champaign \url{https://github.com/RobinGuers/On-Informational-Nudging-and-Control-of-a-payoff-learning-process}
+\par\end{center}
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the \textquotedbl{}Software\textquotedbl{}),
+to deal with the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom
+the Software is furnished to do so, subject to the following conditions:
+Redistributions of source code must retain the above copyright notice,
+this list of conditions and the following disclaimers. Redistributions
+in binary form must reproduce the above copyright notice, this list
+of conditions and the following disclaimers in the documentation and/or
+other materials provided with the distribution. Neither the names
+of the Department of Civil and Environmental Engineering, the University
+of Illinois at Urbana-Champaign, nor the names of its contributors
+may be used to endorse or promote products derived from this Software
+without specific prior written permission.
+
+THE SOFTWARE IS PROVIDED \textquotedbl{}AS IS\textquotedbl{}, WITHOUT
+WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+AND NONINFRINGEMENT. IN NO EVENT SHALL THE CONTRIBUTORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS WITH
+THE SOFTWARE.
+
+
+\section{Publishing results using this software}
+
+We kindly ask any future publications using this software include
+a reference to the following publication:
+
+Guers Langbort and Work, ``On informational nudging and control of payoff-based learning''
+
+\section{Structure of the code}
+Below we give a description of scripts included in the software.
+\begin{itemize}
+\item \begin{verbatim}Plotl2R21Diagram.m\end{verbatim}
+contains the implementation of the stability analysis presented in subsection 3-2 of the two alternative cases.
+The functions
+\begin{itemize}
+\item \begin{verbatim}R21Critical1.m\end{verbatim} and
+\item \begin{verbatim}R21Critical1.m\end{verbatim}
+draw the upper and lower boundaries of the unstable region.
+\end{itemize}
+
+
+\item \begin{verbatim} MinimumLies2Alternatives.m\end{verbatim} is used to compute the minimum lies to nudge a user toward a specific equilibrium when the user faces two alternatives. It uses the functions
+\begin{itemize}
+\item \begin{verbatim}objToMinimize.m\end{verbatim} which returns a value measuring how far from equilibrium point the system is.
+\end{itemize}
+
+
+\item \begin{verbatim}DrawLieRegion.m\end{verbatim} can be used to visualize the admissible lying region for the case with three alternatives. It uses the function
+\begin{itemize}
+\item \begin{verbatim}plotregion.m \end{verbatim} available on Matlab exchange thanks to  Per Bergström
+\end{itemize}
+
+
+
+\item \begin{verbatim}MinimumLies3Alternative.m\end{verbatim} is used to compute the minimum set of lies to nudge a user toward a specific equilibrium when the user faces three alternatives.
+The functions used in this program are
+\begin{itemize}
+\item \begin{verbatim}PayoffToProbDeltaX.m\end{verbatim} which converts a payoff into a probability value using the logit rule.
+\item \begin{verbatim}objfunDeltaX.m\end{verbatim} which returns a value measuring how far from equilibrium point the system is.
+\end{itemize}
+
+
+\item \begin{verbatim}AdaptiveConstantPayoff.m\end{verbatim} is used to simulate the discrete stochastic process presented in the section AdaptiveLyingStrategy.
+The functions used are
+\begin{itemize}
+\item \begin{verbatim}AdaptiveLieDelta.m \end{verbatim} which computes the appropriate adaptive lie.
+\item \begin{verbatim}InterestingQuantities.m \end{verbatim} which computes the quantity described in the proof of the adaptive lying strategy.
+\end{itemize}
+It also uses the classes
+\begin{itemize}
+\item \begin{verbatim} Player.m \end{verbatim} which contains the characteristic of a user and her ability to update and pick a choice at every time step.
+\item \begin{verbatim} Network.m \end{verbatim} which encompasses more features than actually needed.
+\end{itemize}
+
+
+\end{itemize}
+\section{Running the code}
+The provided m-files can be used to reproduce the results presented in the publication.
+\begin{enumerate}
+\item Create the illustration of the stability region for section 3.2 by running the script\begin{verbatim}Plotl2R21Diagram.m\end{verbatim} where $\beta$ and the precision can be modified.
+
+\item Draw the admissible lying region region for the case with three alternatives running the script
+\begin{verbatim} DrawLieRegion.m\end{verbatim}.
+The values of the logit parameter $\beta$, and the true reward R can be modified.
+The default values are $\beta=1$ and R=[1,2,3].
+
+ \item Generate the set of minimum constant lies for the case with two alternatives by running the script
+ \begin{verbatim} MinimumLies2Alternatives.m\end{verbatim}.
+The value of the logit parameter $\beta$, Pibegin,Piend and Pistep can be modified.
+The default values are $\beta=1$, Pibegin=0.05, Piend=0.95 and Pistep=10.
+ 
+ \item Generate the set of minimum lies for a specific true reward for the case with three alternatives by running the script
+ \begin{verbatim}MinimumLies3Alternative.m \end{verbatim}.
+The values of the logit parameter $\beta$,the true Reward R, PiMax, Pimin, NumPoint can be modified.
+The default values are $\beta=1$, R=[1,2,3], PiMax=0.95, Pimin=0.05, NumPoint=5.
+ 
+ \item Generate the simulation of the discrete stochastic process, by running
+ \begin{verbatim}AdaptiveConstantPayoff.m\end{verbatim}
+ where the true reward (GlobalPayofAv), the number of choice (ChoiceNumber), the number of different type of user (PlayerNumber), the number of step simulated, the desired payoff (xstar), the logit parameter $\beta$, and the averaging factors can be modified (the fast factor is 1/n and the slow one is $1/n^{1/2+\alpha}$. The default values are $\beta=1$, ChoiceNumber=3, PlayerNumber=5, StepNumber=100, xstar=[-1,0,1].
+\end{enumerate}
+\end{document}
