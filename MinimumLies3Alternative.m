@@ -1,3 +1,4 @@
+
 %This script makes use of the plotregion function availbale on the matlab
 %exchange
 close all;
@@ -198,8 +199,9 @@ for k=1:NumPoint
 options = optimset('Algorithm','interior-point');
 x0=[X21grid(k,j),X31grid(k,j)];
 Pivec=[Pi1grid(k,j);Pi2grid(k,j);1-(Pi1grid(k,j)+Pi2grid(k,j))];
+nonlcon=[];
 %objfunDeltaX outputs how far from the equilibrium point one is
-[lvec,val] = fmincon(@(L) objfunDeltaX( x0,R,L,Beta ),[0;0;0],-Aglob(:,:,p),-b1,[],[],lb,[],options);
+[lvec,val] = fmincon(@(L) objfunDeltaX( x0,R,L,Beta ),[0;0;0],-Aglob(:,:,p),-b1,[],[],lb,[],nonlcon,options);
 valvec(k,j)=val;
 AllPossibleLies(1,p)=val;
 AllPossibleLies(2:end,p)=lvec;
@@ -255,3 +257,5 @@ xlabel('\pi_{1}^{*}');
 ylabel('\pi_{2}^{*}');
 zlabel('Credibility Value');
 title('Value of l_{3} at Equilibrium');
+
+
